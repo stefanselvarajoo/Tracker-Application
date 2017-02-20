@@ -11,7 +11,31 @@
     tools:context="com.michael.trackerapplication.MainActivity">
 
     <TextView
+        android:text="Condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="177dp"
+        android:id="@+id/conditiontextView" />
+
+    <Button
+        android:text="Sunny"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="142dp"
+        android:id="@+id/sunnybutton"
+        android:layout_below="@+id/conditiontextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="23dp" />
+
+    <Button
+        android:text="Foggy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:id="@+id/foggybutton"
+        android:layout_alignBaseline="@+id/sunnybutton"
+        android:layout_alignBottom="@+id/sunnybutton"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

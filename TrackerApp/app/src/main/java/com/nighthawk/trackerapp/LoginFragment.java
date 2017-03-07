@@ -37,11 +37,12 @@ public class LoginFragment extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         final Intent registerIntent = new Intent(this,RegisterFragment.class);
+        final Intent mainIntent = new Intent(this,MainActivity.class);
         Button login = (Button)findViewById(R.id.btLogin);
         final Button register = (Button)findViewById(R.id.etRegister);
         login.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-
+            startActivity(mainIntent);
             }
         });
         register.setOnClickListener(new View.OnClickListener(){

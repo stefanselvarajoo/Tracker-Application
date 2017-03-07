@@ -92,39 +92,41 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_signout) {
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-            View mView = getLayoutInflater().inflate(R.layout.dialog_signout,null);
-            final TextView tvSignout = (TextView) mView.findViewById(R.id.tvSignout);
-            Button mYes = (Button) mView.findViewById(R.id.btnYes);
-            Button mNo = (Button) mView.findViewById(R.id.btnNo);
-            mBuilder.setView(mView);
-            final AlertDialog dialog = mBuilder.create();
-            dialog.show();
-            mYes.setOnClickListener(new View.OnClickListener(){
-               @Override
-                       public void onClick (View view){
-                   LoginFragment fragment = new LoginFragment();
-                   android.support.v4.app.FragmentTransaction fragmentTransaction =
-                           getSupportFragmentManager().beginTransaction();
-                   fragmentTransaction.replace(R.id.fragment_container, fragment);
-                   fragmentTransaction.commit();
-                   dialog.cancel();
-                }
-            });
-        } else if(id == R.id.nav_register){
-            RegisterFragment fragment = new RegisterFragment();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
-        }else if (id == R.id.nav_login){
-            LoginFragment fragment = new LoginFragment();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
         }
+//        else if (id == R.id.nav_signout) {
+//            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+//            View mView = getLayoutInflater().inflate(R.layout.dialog_signout,null);
+//            final TextView tvSignout = (TextView) mView.findViewById(R.id.tvSignout);
+//            Button mYes = (Button) mView.findViewById(R.id.btnYes);
+//            Button mNo = (Button) mView.findViewById(R.id.btnNo);
+//            mBuilder.setView(mView);
+//            final AlertDialog dialog = mBuilder.create();
+//            dialog.show();
+//            mYes.setOnClickListener(new View.OnClickListener(){
+//               @Override
+//                       public void onClick (View view){
+//                   LoginFragment fragment = new LoginFragment();
+//                   android.support.v4.app.FragmentTransaction fragmentTransaction =
+//                           getSupportFragmentManager().beginTransaction();
+//                   fragmentTransaction.replace(R.id.fragment_container, fragment);
+//                   fragmentTransaction.commit();
+//                   dialog.cancel();
+//                }
+//            });
+//        } else if(id == R.id.nav_register){
+//            RegisterFragment fragment = new RegisterFragment();
+//            android.support.v4.app.FragmentTransaction fragmentTransaction =
+//                    getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container, fragment);
+//            fragmentTransaction.commit();
+//        }
+//        else if (id == R.id.nav_login){
+//            LoginFragment fragment = new LoginFragment();
+//            android.support.v4.app.FragmentTransaction fragmentTransaction =
+//                    getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container, fragment);
+//            fragmentTransaction.commit();
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

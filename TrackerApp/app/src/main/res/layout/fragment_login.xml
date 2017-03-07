@@ -45,7 +45,7 @@
             android:id="@+id/Username">
 
             <EditText
-                android:layout_width="352dp"
+                android:layout_width="379dp"
                 android:layout_height="match_parent"
                 android:inputType="textPersonName"
                 android:ems="10"
@@ -61,7 +61,7 @@
             android:id="@+id/Password">
 
             <EditText
-                android:layout_width="360dp"
+                android:layout_width="379dp"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
                 android:ems="10"
@@ -71,16 +71,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:id="@+id/Login"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Login">
+            android:orientation="horizontal">
 
             <Button
-                android:text="Login"
-                android:layout_width="359dp"
-                android:layout_height="wrap_content"
                 android:id="@+id/btLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -91,14 +91,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/Register">
 
-            <TextView
-                android:text="Register"
+            <Button
+                android:id="@+id/etRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etRegister"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:textAlignment="center" />
+                android:background="@android:color/transparent"
+                android:text="Register"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_blue_dark" />
+
         </LinearLayout>
 
     </LinearLayout>

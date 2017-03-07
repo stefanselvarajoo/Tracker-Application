@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,23 +23,48 @@ import com.google.firebase.auth.FirebaseAuth;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
 
-    public LoginFragment() {
-        // Required empty public constructor
-        mFirebaseAuth = FirebaseAuth.getInstance();
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_login);
     }
-
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+    public void onStart(){
+        super.onStart();
+        final Intent registerIntent = new Intent(this,RegisterFragment.class);
+        Button login = (Button)findViewById(R.id.btLogin);
+        final Button register = (Button)findViewById(R.id.etRegister);
+        login.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
 
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(registerIntent);
+            }
+        });
     }
+
+
+//    public LoginFragment() {
+//        // Required empty public constructor
+//        mFirebaseAuth = FirebaseAuth.getInstance();
+//    }
+
+
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        return inflater.inflate(R.layout.fragment_login, container, false);
+//
+//    }
 
 //    public void signIn(String email, String password){
 //        final TextView message = (TextView)findViewById(R.id.errorMessage);

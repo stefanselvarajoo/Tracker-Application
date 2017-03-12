@@ -30,11 +30,11 @@
             android:layout_weight="1.00">
 
             <ImageView
+                android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
                 android:layout_height="182dp"
-                app:srcCompat="@drawable/logo"
-                android:id="@+id/imageView8"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                app:srcCompat="@drawable/logo" />
         </LinearLayout>
 
         <LinearLayout
@@ -69,6 +69,13 @@
                 android:hint="Password" />
 
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/autoLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.00"
+            android:text="Automatic Login" />
 
         <LinearLayout
             android:id="@+id/Login"

@@ -1,18 +1,23 @@
 package com.nighthawk.trackerapp;
 
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 
 /**
@@ -21,6 +26,9 @@ import android.widget.Spinner;
 public class RegisterFragment extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinner;
+    private FirebaseAuth mFirebaseAuth;
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference accountType = mRootRef.child("AccountType");
 
     @Override
     public void onCreate(Bundle saveInstanceBundle){
@@ -34,9 +42,9 @@ public class RegisterFragment extends AppCompatActivity implements AdapterView.O
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-        this.spinner.setSelection(0);
         // Inflate the layout for this fragment
         spinner.setOnItemSelectedListener(this);
+        mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -52,18 +60,56 @@ public class RegisterFragment extends AppCompatActivity implements AdapterView.O
         this.spinner.setSelection(0);
     }
 
+    public Boolean register(String id, String password){
+        if(id.equals("")||password.equals("")){
+            CharSequence error = "Email or Password cannot be empty!";
+            Context context = getApplicationContext();
+            Toast toast = Toast.makeText(context, error, Toast.LENGTH_SHORT);
+            toast.show();
+            return Boolean.FALSE;
+        }
+        else{
+            String idInput = id.toLowerCase() + "@mydomain.com";
+            mFirebaseAuth.createUserWithEmailAndPassword(idInput,password);
+            return Boolean.TRUE;
+        }
+    }
 
+    protected void writeItemToDatabase(DatabaseReference parent, HashMap<String,String> hashMap){
+        for(String key: hashMap.keySet()){
+            String id = key;
+            String value = hashMap.get(key);
+            parent.child(id).setValue(value);
+        }
+    }
 
     @Override
     public void onStart(){
         super.onStart();
-        Button register = (Button)findViewById(R.id.btRegister);
+        final Button register = (Button)findViewById(R.id.btRegister);
 //        Intent loginIntent = new Intent(this,LoginFragment.class);
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 /*do something*/
-                finish();
+                TextView icView = (TextView)findViewById(R.id.etRIC);
+                TextView passView = (TextView)findViewById(R.id.etRPassword);
+                String ic = icView.getText().toString().toLowerCase();
+                String pass = passView.getText().toString();
+                if(register(ic,pass)){
+                    // Prepare to write to database (ic : account type)
+                    String selection = spinner.getSelectedItem().toString();
+                    HashMap<String,String> database = new HashMap<String, String>();
+                    database.put(ic,selection);
+                    writeItemToDatabase(accountType,database);
+
+                    CharSequence success = "Register Successful";
+                    Context context = getApplicationContext();
+                    Toast toast = Toast.makeText(context, success, Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    finish();
+                }
             }
         });
     }

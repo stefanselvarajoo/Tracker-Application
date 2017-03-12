@@ -1,9 +1,6 @@
 package com.nighthawk.trackerapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,16 +10,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.nighthawk.trackerapp.Model.SingletonStorage;
+
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference accountType = mRootRef.child("AccountType");
+    private SingletonStorage storage = SingletonStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -32,8 +46,37 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        // Navigation bar
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View navHeaderView = navigationView.getHeaderView(0);
+        String ic = getIntent().getStringExtra("IC");
+
+        // This to set the navigation header to display the account name and account type
+        TextView nav_header_ic = (TextView)navHeaderView.findViewById(R.id.username);
+        nav_header_ic.setText(ic);
+        final TextView nav_header_accountType = (TextView)navHeaderView.findViewById(R.id.accountType);
+        accountType.child(ic).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String aType = dataSnapshot.getValue(String.class);
+                nav_header_accountType.setText(aType);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Call home page fragment
+        HomeFragment fragment = new HomeFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+
     }
 
     @Override
